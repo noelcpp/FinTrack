@@ -194,6 +194,7 @@ public final class LoginFrame extends JFrame {
             JOptionPane.showMessageDialog(this, "FinTrack could not access its local user store.\n" + ex.getMessage(), "Storage error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Arrays.fill(password, '\0');
+            passwordField.setText("");
         }
     }
 }

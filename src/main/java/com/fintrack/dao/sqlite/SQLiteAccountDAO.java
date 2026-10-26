@@ -19,7 +19,7 @@ public class SQLiteAccountDAO implements AccountDAO {
     private final DatabaseConnection db;
     public SQLiteAccountDAO(DatabaseConnection db) { this.db = db; }
     @Override public List<Account> findAll() {
-        try(Connection c=db.getConnection(); PreparedStatement ps=c.prepareStatement("SELECT id,name,type,opening_balance FROM accounts ORDER BY name"); ResultSet rs=ps.executeQuery()) {
+        try(Connection c=db.getConnection(); PreparedStatement ps=c.prepareStatement("SELECT id,name,type,opening_balance FROM accounts ORDER BY name COLLATE NOCASE ASC, id ASC"); ResultSet rs=ps.executeQuery()) {
             List<Account> values=new ArrayList<>(); while(rs.next()) values.add(map(rs)); return values;
         } catch(SQLException ex) { throw new DataAccessException("Could not load accounts",ex); }
     }

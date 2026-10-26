@@ -4,6 +4,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
@@ -61,6 +63,18 @@ public final class AppTheme {
         UIManager.put("ScrollPane.border", BorderFactory.createEmptyBorder());
         UIManager.put("OptionPane.background", CARD);
         UIManager.put("OptionPane.messageForeground", TEXT);
+    }
+
+    /** Hides an implementation-only model column without removing its underlying data. */
+    public static void hideColumn(JTable table, String columnName) {
+        TableColumnModel columnModel = table.getColumnModel();
+        for (int index = 0; index < columnModel.getColumnCount(); index++) {
+            TableColumn column = columnModel.getColumn(index);
+            if (columnName.equals(column.getHeaderValue())) {
+                columnModel.removeColumn(column);
+                return;
+            }
+        }
     }
 
     public static void styleTable(JTable table) {

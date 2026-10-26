@@ -1,6 +1,8 @@
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/Main.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/app/AppContext.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/app/Application.java
+/home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/auth/UserDatabasePaths.java
+/home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/auth/UserStore.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/dao/AccountDAO.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/dao/BudgetDAO.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/dao/CategoryDAO.java
@@ -29,10 +31,16 @@
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/BudgetPanel.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/CategoryPanel.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/DashboardPanel.java
+/home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/LoginFrame.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/MainFrame.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/ReportsPanel.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/TransactionPanel.java
+/home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/AppTheme.java
+/home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/FinancialChartPanel.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/NavigationPanel.java
+/home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/RoundedButton.java
+/home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/RoundedLineBorder.java
+/home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/RoundedPanel.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/SummaryCard.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/TransactionTableModel.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/dialog/AccountDialog.java

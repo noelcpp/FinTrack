@@ -36,56 +36,71 @@ public final class UserStore {
     }
 
     public void register(String usernameInput, char[] password) {
-        String username = normalizeUsername(usernameInput);
-        validateUsername(username);
-        validatePassword(password);
-        byte[] salt = new byte[SALT_BYTES];
-        RANDOM.nextBytes(salt);
-        byte[] hash = hash(password, salt, ITERATIONS);
-        String sql = "INSERT INTO app_users(username, salt, password_hash, iterations, created_at) VALUES(?,?,?,?,?)";
-        try (Connection connection = connect(); PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, username);
-            statement.setBytes(2, salt);
-            statement.setBytes(3, hash);
-            statement.setInt(4, ITERATIONS);
-            statement.setString(5, Instant.now().toString());
-            statement.executeUpdate();
+        byte[] hash = null;
+        try {
+            String username = normalizeUsername(usernameInput);
+            validateUsername(username);
+            validatePassword(password);
+            byte[] salt = new byte[SALT_BYTES];
+            RANDOM.nextBytes(salt);
+            hash = hash(password, salt, ITERATIONS);
+            String sql = "INSERT INTO app_users(username, salt, password_hash, iterations, created_at) VALUES(?,?,?,?,?)";
+            try (Connection connection = connect(); PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, username);
+                statement.setBytes(2, salt);
+                statement.setBytes(3, hash);
+                statement.setInt(4, ITERATIONS);
+                statement.setString(5, Instant.now().toString());
+                statement.executeUpdate();
+            }
         } catch (SQLException ex) {
             if (ex.getMessage() != null && ex.getMessage().toLowerCase(Locale.ROOT).contains("unique")) {
                 throw new IllegalArgumentException("That username is already registered.");
             }
             throw new IllegalStateException("Could not create the local user account.", ex);
         } finally {
-            Arrays.fill(hash, (byte) 0);
-            Arrays.fill(password, '\0');
+            if (hash != null) Arrays.fill(hash, (byte) 0);
+            clearPassword(password);
         }
     }
 
     public boolean authenticate(String usernameInput, char[] password) {
-        String username = normalizeUsername(usernameInput);
+        if (password == null) return false;
         try {
-            validateUsername(username);
-        } catch (IllegalArgumentException ex) {
-            Arrays.fill(password, '\0');
-            return false;
-        }
-        try (Connection connection = connect();
-             PreparedStatement statement = connection.prepareStatement("SELECT salt, password_hash, iterations FROM app_users WHERE username = ?")) {
-            statement.setString(1, username);
-            try (ResultSet result = statement.executeQuery()) {
-                if (!result.next()) return false;
-                byte[] salt = result.getBytes("salt");
-                byte[] expected = result.getBytes("password_hash");
-                int iterations = result.getInt("iterations");
-                byte[] actual = hash(password, salt, iterations);
-                try { return MessageDigest.isEqual(expected, actual); }
-                finally { Arrays.fill(actual, (byte) 0); Arrays.fill(expected, (byte) 0); }
+            String username = normalizeUsername(usernameInput);
+            try {
+                validateUsername(username);
+            } catch (IllegalArgumentException ex) {
+                return false;
+            }
+            try (Connection connection = connect();
+                 PreparedStatement statement = connection.prepareStatement(
+                         "SELECT salt, password_hash, iterations FROM app_users WHERE username = ?")) {
+                statement.setString(1, username);
+                try (ResultSet result = statement.executeQuery()) {
+                    if (!result.next()) return false;
+                    byte[] salt = result.getBytes("salt");
+                    byte[] expected = result.getBytes("password_hash");
+                    int iterations = result.getInt("iterations");
+                    byte[] actual = hash(password, salt, iterations);
+                    try {
+                        return MessageDigest.isEqual(expected, actual);
+                    } finally {
+                        Arrays.fill(actual, (byte) 0);
+                        Arrays.fill(expected, (byte) 0);
+                        Arrays.fill(salt, (byte) 0);
+                    }
+                }
             }
         } catch (SQLException ex) {
             throw new IllegalStateException("Could not verify the local user account.", ex);
         } finally {
-            Arrays.fill(password, '\0');
+            clearPassword(password);
         }
+    }
+
+    private static void clearPassword(char[] password) {
+        if (password != null) Arrays.fill(password, '\0');
     }
 
     public Path getDatabasePath() { return databasePath; }

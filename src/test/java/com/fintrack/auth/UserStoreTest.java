@@ -25,8 +25,17 @@ class UserStoreTest {
         assertThrows(IllegalArgumentException.class, () -> users.register("NOEL", "AnotherPass123".toCharArray()));
     }
 
-    @Test void rejectsWeakPasswords() {
+    @Test void rejectsWeakPasswordsAndClearsProvidedPasswordBuffer() {
         UserStore users = new UserStore(tempDir.resolve("users.db"));
-        assertThrows(IllegalArgumentException.class, () -> users.register("noel", "short".toCharArray()));
+        char[] weakPassword = "short".toCharArray();
+        assertThrows(IllegalArgumentException.class, () -> users.register("noel", weakPassword));
+        assertArrayEquals(new char[weakPassword.length], weakPassword);
+    }
+
+    @Test void rejectsInvalidUsernamesAndClearsProvidedPasswordBuffer() {
+        UserStore users = new UserStore(tempDir.resolve("users.db"));
+        char[] password = "SafePass123".toCharArray();
+        assertThrows(IllegalArgumentException.class, () -> users.register("x", password));
+        assertArrayEquals(new char[password.length], password);
     }
 }

@@ -29,8 +29,16 @@ public class DatabaseConnection {
         Connection connection = DriverManager.getConnection("jdbc:sqlite:" + databasePath);
         try (Statement statement = connection.createStatement()) {
             statement.execute("PRAGMA foreign_keys = ON");
+            statement.execute("PRAGMA busy_timeout = 5000");
+            return connection;
+        } catch (SQLException ex) {
+            try {
+                connection.close();
+            } catch (SQLException closeError) {
+                ex.addSuppressed(closeError);
+            }
+            throw ex;
         }
-        return connection;
     }
 
     public Path getDatabasePath() { return databasePath; }

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS categories (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL COLLATE NOCASE,
     type TEXT NOT NULL CHECK (type IN ('INCOME', 'EXPENSE')),
     UNIQUE(name, type)
 );

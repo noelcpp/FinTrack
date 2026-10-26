@@ -19,7 +19,7 @@ public class SQLiteBudgetDAO implements BudgetDAO {
     private final DatabaseConnection db;
     public SQLiteBudgetDAO(DatabaseConnection db) { this.db = db; }
     @Override public List<Budget> findAll() {
-        try(Connection c=db.getConnection(); PreparedStatement ps=c.prepareStatement("SELECT id,category_id,budget_month,limit_amount FROM budgets ORDER BY budget_month DESC"); ResultSet rs=ps.executeQuery()) {
+        try(Connection c=db.getConnection(); PreparedStatement ps=c.prepareStatement("SELECT id,category_id,budget_month,limit_amount FROM budgets ORDER BY budget_month DESC, id ASC"); ResultSet rs=ps.executeQuery()) {
             List<Budget> values=new ArrayList<>(); while(rs.next()) values.add(map(rs)); return values;
         } catch(SQLException ex) { throw new DataAccessException("Could not load budgets",ex); }
     }

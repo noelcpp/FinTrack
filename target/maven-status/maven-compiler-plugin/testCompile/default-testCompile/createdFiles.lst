@@ -1,6 +1,7 @@
 com/fintrack/dao/TransactionDAOTest.class
 com/fintrack/service/BudgetServiceTest$1.class
 com/fintrack/service/TransactionServiceTest.class
+com/fintrack/auth/UserStoreTest.class
 com/fintrack/service/BudgetServiceTest.class
 com/fintrack/util/InputValidatorTest.class
 com/fintrack/service/BudgetServiceTest$2.class
