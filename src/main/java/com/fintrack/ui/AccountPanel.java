@@ -2,9 +2,14 @@ package com.fintrack.ui;
 
 import com.fintrack.app.AppContext;
 import com.fintrack.model.Account;
+import com.fintrack.ui.components.AppTheme;
+import com.fintrack.ui.components.RoundedButton;
+import com.fintrack.ui.components.RoundedPanel;
 import com.fintrack.ui.dialog.AccountDialog;
 import com.fintrack.util.CurrencyFormatter;
-import javax.swing.JButton;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,11 +17,36 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 
 public class AccountPanel extends JPanel {
-    private final AppContext context; private final DefaultTableModel model=new DefaultTableModel(new Object[]{"ID","Name","Type","Opening balance"},0); private final JTable table=new JTable(model);
-    public AccountPanel(AppContext context){this.context=context;setLayout(new BorderLayout(12,12));setBorder(javax.swing.BorderFactory.createEmptyBorder(24,24,24,24));
-        JPanel top=new JPanel(new BorderLayout());top.add(new javax.swing.JLabel("Accounts"),BorderLayout.WEST);JPanel actions=new JPanel(new FlowLayout(FlowLayout.RIGHT));JButton add=new JButton("Add account");JButton delete=new JButton("Delete selected");add.addActionListener(e->AccountDialog.open(this,context.getAccountService(),this::refreshData));delete.addActionListener(e->deleteSelected());actions.add(add);actions.add(delete);top.add(actions,BorderLayout.EAST);add(top,BorderLayout.NORTH);add(new JScrollPane(table),BorderLayout.CENTER);refreshData();}
-    public void refreshData(){model.setRowCount(0);for(Account a:context.getAccountService().findAll())model.addRow(new Object[]{a.getId(),a.getName(),a.getType(),CurrencyFormatter.format(a.getOpeningBalance())});}
-    private void deleteSelected(){int row=table.getSelectedRow();if(row<0)return;long id=((Number)model.getValueAt(table.convertRowIndexToModel(row),0)).longValue();try{context.getAccountService().deleteById(id);refreshData();}catch(RuntimeException ex){JOptionPane.showMessageDialog(this,ex.getMessage(),"Delete failed",JOptionPane.ERROR_MESSAGE);}}
+    private final AppContext context;
+    private final DefaultTableModel model = new DefaultTableModel(new Object[]{"ID", "Name", "Type", "Opening balance"}, 0);
+    private final JTable table = new JTable(model);
+
+    public AccountPanel(AppContext context) {
+        this.context = context; setLayout(new BorderLayout(18, 18)); setBackground(AppTheme.BACKGROUND);
+        setBorder(BorderFactory.createEmptyBorder(24, 26, 26, 26));
+        JPanel top = new JPanel(new BorderLayout(12, 10)); top.setOpaque(false);
+        JLabel title = new JLabel("Accounts"); title.setFont(title.getFont().deriveFont(Font.BOLD, 24f)); title.setForeground(AppTheme.TEXT);
+        JLabel subtitle = new JLabel("Track the cash, bank and card accounts you use."); subtitle.setForeground(AppTheme.MUTED);
+        JPanel heading = new JPanel(); heading.setOpaque(false); heading.setLayout(new javax.swing.BoxLayout(heading, javax.swing.BoxLayout.Y_AXIS)); heading.add(title); heading.add(javax.swing.Box.createVerticalStrut(4)); heading.add(subtitle); top.add(heading, BorderLayout.WEST);
+        JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0)); actions.setOpaque(false);
+        RoundedButton add = new RoundedButton("Add account"); RoundedButton delete = new RoundedButton("Delete selected", RoundedButton.Variant.DANGER);
+        add.addActionListener(e -> AccountDialog.open(this, context.getAccountService(), this::refreshData)); delete.addActionListener(e -> deleteSelected());
+        actions.add(add); actions.add(delete); top.add(actions, BorderLayout.EAST); add(top, BorderLayout.NORTH);
+        AppTheme.styleTable(table);
+        JScrollPane scroll = new JScrollPane(table); scroll.setBorder(BorderFactory.createEmptyBorder()); scroll.getViewport().setBackground(AppTheme.CARD);
+        RoundedPanel card = new RoundedPanel(AppTheme.CARD, 20, AppTheme.BORDER); card.setLayout(new BorderLayout()); card.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8)); card.add(scroll);
+        add(card, BorderLayout.CENTER); refreshData();
+    }
+
+    public void refreshData() { model.setRowCount(0); for (Account a : context.getAccountService().findAll()) model.addRow(new Object[]{a.getId(), a.getName(), a.getType(), CurrencyFormatter.format(a.getOpeningBalance())}); }
+
+    private void deleteSelected() {
+        int row = table.getSelectedRow(); if (row < 0) { JOptionPane.showMessageDialog(this, "Select an account first."); return; }
+        long id = ((Number) model.getValueAt(table.convertRowIndexToModel(row), 0)).longValue();
+        try { context.getAccountService().deleteById(id); refreshData(); }
+        catch (RuntimeException ex) { JOptionPane.showMessageDialog(this, ex.getMessage(), "Delete failed", JOptionPane.ERROR_MESSAGE); }
+    }
 }

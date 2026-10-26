@@ -10,6 +10,7 @@ import com.fintrack.dao.sqlite.SQLiteCategoryDAO;
 import com.fintrack.dao.sqlite.SQLiteTransactionDAO;
 import com.fintrack.database.DatabaseConnection;
 import com.fintrack.database.DatabaseInitializer;
+import com.fintrack.auth.UserDatabasePaths;
 import com.fintrack.service.AccountService;
 import com.fintrack.service.BudgetService;
 import com.fintrack.service.CategoryService;
@@ -30,8 +31,18 @@ public final class AppContext {
     private final DashboardService dashboardService;
     private final ReportService reportService;
 
+    /** Opens the original default profile (kept for tests and migration utilities). */
     public AppContext() {
-        databaseConnection = new DatabaseConnection();
+        this(new DatabaseConnection());
+    }
+
+    /** Opens a separate database for the authenticated username. */
+    public AppContext(String username) {
+        this(new DatabaseConnection(UserDatabasePaths.forUsername(username)));
+    }
+
+    private AppContext(DatabaseConnection connection) {
+        databaseConnection = connection;
         new DatabaseInitializer(databaseConnection).initialize();
         transactionDAO = new SQLiteTransactionDAO(databaseConnection);
         categoryDAO = new SQLiteCategoryDAO(databaseConnection);
