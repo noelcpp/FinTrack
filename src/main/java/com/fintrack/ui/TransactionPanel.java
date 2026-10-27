@@ -10,10 +10,12 @@ import com.fintrack.ui.dialog.TransactionDialog;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import java.awt.Component;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -45,6 +47,23 @@ public class TransactionPanel extends JPanel {
         add(top, BorderLayout.NORTH);
 
         AppTheme.styleTable(table);
+        javax.swing.table.TableCellRenderer moneyAndTypeRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable target, Object value, boolean selected,
+                                                           boolean focused, int row, int column) {
+                Component component = super.getTableCellRendererComponent(target, value, selected, focused, row, column);
+                if (!selected && row >= 0) {
+                    int modelRow = target.convertRowIndexToModel(row);
+                    Object typeValue = model.getValueAt(modelRow, 2);
+                    if (typeValue == com.fintrack.model.enums.TransactionType.INCOME) component.setForeground(AppTheme.TEAL);
+                    else if (typeValue == com.fintrack.model.enums.TransactionType.EXPENSE) component.setForeground(AppTheme.RED);
+                    else component.setForeground(AppTheme.TEXT);
+                }
+                return component;
+            }
+        };
+        table.getColumnModel().getColumn(2).setCellRenderer(moneyAndTypeRenderer);
+        table.getColumnModel().getColumn(3).setCellRenderer(moneyAndTypeRenderer);
         JScrollPane scroll = new JScrollPane(table); scroll.setBorder(BorderFactory.createEmptyBorder()); scroll.getViewport().setBackground(AppTheme.CARD);
         RoundedPanel tableCard = new RoundedPanel(AppTheme.CARD, 20, AppTheme.BORDER); tableCard.setLayout(new BorderLayout()); tableCard.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8)); tableCard.add(scroll, BorderLayout.CENTER);
         add(tableCard, BorderLayout.CENTER);

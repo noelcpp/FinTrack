@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setBackground(AppTheme.BACKGROUND);
 
-        dashboard = new DashboardPanel(context);
+        dashboard = new DashboardPanel(context, () -> showPage("transactions"));
         transactions = new TransactionPanel(context);
         categories = new CategoryPanel(context);
         accounts = new AccountPanel(context);

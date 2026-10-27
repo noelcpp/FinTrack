@@ -38,6 +38,7 @@
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/AppTheme.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/FinancialChartPanel.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/NavigationPanel.java
+/home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/ReadOnlyTableModel.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/RoundedButton.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/RoundedLineBorder.java
 /home/noel/Documents/Projects/personal-finance-manager/src/main/java/com/fintrack/ui/components/RoundedPanel.java

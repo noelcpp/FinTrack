@@ -31,6 +31,7 @@ public class SummaryCard extends RoundedPanel {
     }
 
     public void setValue(String value) { valueLabel.setText(value); }
+    public void setValueColor(Color color) { valueLabel.setForeground(color == null ? AppTheme.TEXT : color); }
 
     @Override protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);

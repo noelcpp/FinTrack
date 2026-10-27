@@ -1,5 +1,6 @@
 com/fintrack/ui/CategoryPanel.class
 com/fintrack/service/DashboardService.class
+com/fintrack/ui/ReportsPanel$PeriodMode.class
 com/fintrack/exception/DataAccessException.class
 com/fintrack/dao/sqlite/SQLiteAccountDAO.class
 com/fintrack/app/Application.class
@@ -15,6 +16,7 @@ com/fintrack/auth/UserDatabasePaths.class
 com/fintrack/dao/sqlite/SQLiteTransactionDAO.class
 com/fintrack/util/DateUtils.class
 com/fintrack/ui/MainFrame.class
+com/fintrack/ui/ReportsPanel$1.class
 com/fintrack/model/FinanceTransaction.class
 com/fintrack/util/InputValidator.class
 com/fintrack/dao/AccountDAO.class
@@ -38,15 +40,20 @@ com/fintrack/service/TransactionService.class
 com/fintrack/service/BudgetService.class
 com/fintrack/ui/components/FinancialChartPanel$Plot.class
 com/fintrack/util/CurrencyFormatter.class
+com/fintrack/ui/components/ReadOnlyTableModel.class
 com/fintrack/auth/UserStore.class
 com/fintrack/ui/components/SummaryCard.class
 com/fintrack/ui/ReportsPanel.class
 com/fintrack/model/Budget.class
+com/fintrack/ui/TransactionPanel$1.class
 com/fintrack/ui/dialog/AccountDialog.class
 com/fintrack/dao/sqlite/SQLiteCategoryDAO.class
+com/fintrack/service/ReportService$Summary.class
+com/fintrack/ui/DashboardPanel$1.class
 com/fintrack/ui/dialog/BudgetDialog.class
 com/fintrack/ui/components/AppTheme.class
 com/fintrack/ui/TransactionPanel.class
+com/fintrack/ui/ReportsPanel$DateRange.class
 com/fintrack/ui/components/FinancialChartPanel$Type.class
 com/fintrack/dao/CategoryDAO.class
 com/fintrack/model/enums/TransactionType.class

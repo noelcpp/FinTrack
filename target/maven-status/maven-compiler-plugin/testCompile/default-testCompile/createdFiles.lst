@@ -1,8 +1,15 @@
+com/fintrack/service/CategoryServiceTest.class
+com/fintrack/service/BudgetServiceTest$2.class
+com/fintrack/service/TransactionServiceTest$MemoryTransactionDAO.class
+com/fintrack/service/ReportServiceTest.class
 com/fintrack/dao/TransactionDAOTest.class
 com/fintrack/service/BudgetServiceTest$1.class
+com/fintrack/dao/CategoryDAOTest.class
+com/fintrack/service/ReportServiceTest$MemoryCategoryDAO.class
 com/fintrack/service/TransactionServiceTest.class
+com/fintrack/ui/components/ReadOnlyTableModelTest.class
+com/fintrack/service/ReportServiceTest$MemoryTransactionDAO.class
 com/fintrack/auth/UserStoreTest.class
 com/fintrack/service/BudgetServiceTest.class
 com/fintrack/util/InputValidatorTest.class
-com/fintrack/service/BudgetServiceTest$2.class
-com/fintrack/service/TransactionServiceTest$MemoryTransactionDAO.class
+com/fintrack/service/CategoryServiceTest$MemoryCategoryDAO.class
