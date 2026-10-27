@@ -222,7 +222,7 @@ No license has been specified yet. Unless a license is added to the repository, 
 
 **Noel Clement**
 
-GitHub: [YOUR_GITHUB_USERNAME](https://github.com/YOUR_GITHUB_USERNAME)
+GitHub: [NOELCPP](https://github.com/noelcpp)
 
 ---
 
