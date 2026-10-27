@@ -119,11 +119,14 @@ public final class LoginFrame extends JFrame {
         switchModeButton.setForeground(AppTheme.PRIMARY);
         switchModeButton.setFont(switchModeButton.getFont().deriveFont(Font.BOLD, 12f));
         switchModeButton.setAlignmentX(LEFT_ALIGNMENT);
-        switchModeButton.addActionListener(e -> { createMode = !createMode; updateMode(); });
+        switchModeButton.addActionListener(e -> {
+            createMode = !createMode;
+            updateMode();
+        });
         content.add(switchModeButton);
         content.add(Box.createVerticalGlue());
 
-        JLabel localNote = new JLabel("Local-only accounts · each user has a separate data file");
+        JLabel localNote = new JLabel("Developed by Noel and Manav");
         localNote.setFont(localNote.getFont().deriveFont(10.5f));
         localNote.setForeground(AppTheme.MUTED);
         localNote.setAlignmentX(LEFT_ALIGNMENT);
@@ -157,14 +160,18 @@ public final class LoginFrame extends JFrame {
     }
 
     private void updateMode() {
-        if (heading == null) return;
+        if (heading == null)
+            return;
         heading.setText(createMode ? "Create your account" : "Welcome back");
-        description.setText(createMode ? "Start with a separate local finance profile." : "Sign in to open your personal finance workspace.");
+        description.setText(createMode ? "Start with a separate local finance profile."
+                : "Sign in to open your personal finance workspace.");
         submitButton.setText(createMode ? "Create account" : "Sign in");
-        switchModeButton.setText(createMode ? "Already have an account? Sign in" : "New to FinTrack? Create an account");
+        switchModeButton
+                .setText(createMode ? "Already have an account? Sign in" : "New to FinTrack? Create an account");
         hint.setText(createMode ? "Username: 3–32 characters. Password: at least 8 characters." : " ");
         setTitle(createMode ? "FinTrack — Create account" : "FinTrack — Sign in");
-        revalidate(); repaint();
+        revalidate();
+        repaint();
     }
 
     private void submit() {
@@ -174,13 +181,15 @@ public final class LoginFrame extends JFrame {
             if (createMode) {
                 userStore.register(username, password);
                 username = username.trim().toLowerCase(java.util.Locale.ROOT);
-                JOptionPane.showMessageDialog(this, "Account created. You are now signed in.", "FinTrack", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Account created. You are now signed in.", "FinTrack",
+                        JOptionPane.INFORMATION_MESSAGE);
                 dispose();
                 onAuthenticated.accept(username);
             } else {
                 boolean valid = userStore.authenticate(username, password);
                 if (!valid) {
-                    JOptionPane.showMessageDialog(this, "Username or password is incorrect.", "Sign-in failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Username or password is incorrect.", "Sign-in failed",
+                            JOptionPane.ERROR_MESSAGE);
                     passwordField.setText("");
                     passwordField.requestFocusInWindow();
                     return;
@@ -189,9 +198,11 @@ public final class LoginFrame extends JFrame {
                 onAuthenticated.accept(username.trim().toLowerCase(java.util.Locale.ROOT));
             }
         } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), createMode ? "Could not create account" : "Sign-in failed", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                    createMode ? "Could not create account" : "Sign-in failed", JOptionPane.WARNING_MESSAGE);
         } catch (RuntimeException ex) {
-            JOptionPane.showMessageDialog(this, "FinTrack could not access its local user store.\n" + ex.getMessage(), "Storage error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "FinTrack could not access its local user store.\n" + ex.getMessage(),
+                    "Storage error", JOptionPane.ERROR_MESSAGE);
         } finally {
             Arrays.fill(password, '\0');
             passwordField.setText("");
