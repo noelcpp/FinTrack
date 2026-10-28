@@ -1,6 +1,6 @@
 # FinTrack — Personal Finance Management System
 
-A desktop-based personal finance management application built with **Java Swing and SQLite**. FinTrack is designed to help users record financial transactions, organize income and expenses, manage budgets, and understand their financial activity through a graphical interface.
+A vibe-coded desktop-based personal finance management application built with **Java Swing and SQLite**. FinTrack is designed to help users record financial transactions, organize income and expenses, manage budgets, and understand their financial activity through a graphical interface.
 
 > **Project type:** Academic project — Object-Oriented Programming with Java  
 > **Application:** Desktop GUI  
@@ -104,11 +104,11 @@ The current Maven configuration targets **Java 27**. Use a compatible JDK for th
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/FinTrack.git
+git clone https://github.com/noelcpp/FinTrack.git
 cd FinTrack
 ```
 
-Replace `YOUR_USERNAME` with your GitHub username and adjust the repository URL if you chose a different name.
+Replace `noelcpp` with your GitHub username and adjust the repository URL if you chose a different name.
 
 ### 2. Build the project
 
